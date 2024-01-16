@@ -1,0 +1,64 @@
+Grinding Geek
+
+Questions:->
+
+
+Example 1:
+
+Input:
+n = 2
+total = 10
+cost = [10, 9]
+Output: 2
+Explanation: 
+Geek can buy the first course for 10 amount, 
+complete it on the same date and redeem 9 back. 
+Next, he can buy and complete the 2nd course too.
+Example 2:
+
+Input:
+n = 11
+total = 10
+cost = [10, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+Output: 10
+Explanation: 
+Geek can buy and complete all the courses that cost 1.
+Your Task:
+This is a function problem. The input is already taken care of by the driver code. You only need to complete the function max_courses() that takes N the number of days, the total amount, and the cost array as input argument and return the maximum amount of courses that could be purchased.
+
+Expected Time Complexity: O(n*total)
+Expected Auxiliary Space: O(n*total)
+
+Constraints:
+1 <= n <= 1000
+0 <= total <= 1000
+1 <= cost[i] <= 1000
+
+
+Answer:->
+
+class Solution {
+    public int max_courses(int n, int k, int[] arr) {
+        // code here
+        int dp[][]=new int[k+1][arr.length+1];
+        
+        return solve(arr,k,0,dp);
+    }
+    public static int solve(int [] arr,int k,int i,int dp[][]){
+        
+        if(i==arr.length)
+            return 0;
+            
+        if(dp[k][i]!=0)
+            return dp[k][i];
+            
+        int a=0,b=0,c=0;
+        if(k>=arr[i]){
+            
+            a += 1+solve(arr,(k-arr[i])+(int)(Math.floor((0.9*arr[i]))),i+1,dp);
+        }
+        b=solve(arr,k,i+1,dp);
+        
+        return dp[k][i]=Math.max(a,b);
+    }
+}
